@@ -2,8 +2,9 @@ import React, { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as SplashScreen from "expo-splash-screen";
-import LoginScreen from "./app/login"; 
-// import dummyScreen from "./app/DummyScreen"
+import LoginScreen from "./app/login";
+import OtpScreen from "./app/otpScreen";
+import DummyScreen from "./app/dummyScreen";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -23,7 +24,8 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Login" component={LoginScreen} />
-        {/* <Stack.Screen name="DummyScreen" component={dummyScreen} /> */}
+        <Stack.Screen name="OtpScreen" component={OtpScreen} />
+        <Stack.Screen name="DummyScreen" component={DummyScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,60 +1,54 @@
 import React, { useState } from "react";
-import { View, TextInput, Button, Alert, Text } from "react-native";
+import { View, Text, TextInput, Button, Alert, StyleSheet } from "react-native";
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }: any) => {
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [otp, setOtp] = useState("");
-  const [otpSent, setOtpSent] = useState(false);
 
-  const handleSendOtp = async () => {
-    try {
-      console.log("Mocking OTP send for:", phoneNumber);
-      setOtpSent(true);
-      Alert.alert("OTP Sent!", "Check your phone for the OTP.");
-    } catch (error) {
-      Alert.alert("Error", "Failed to send OTP.");
+  const handleSendOtp = () => {
+    if (!phoneNumber) {
+      Alert.alert("Error", "Please enter a valid phone number.");
+      return;
     }
-  };
-
-  const handleVerifyOtp = async () => {
-    try {
-      if (otp === "123456") {
-        Alert.alert("Success", "Login successful!");
-      } else {
-        Alert.alert("Error", "Invalid OTP.");
-      }
-    } catch (error) {
-      Alert.alert("Error", "Failed to verify OTP.");
-    }
+    console.log("Mocking OTP send for:", phoneNumber);
+    Alert.alert("OTP Sent!", "Check your phone for the OTP.");
+    navigation.navigate("OtpScreen", { phoneNumber });
   };
 
   return (
-    <View>
-      {!otpSent ? (
-        <>
-          <Text>Enter Phone Number:</Text>
-          <TextInput
-            value={phoneNumber}
-            onChangeText={setPhoneNumber}
-            keyboardType="phone-pad"
-            placeholder="Enter your phone number"
-          />
-          <Button title="Send OTP" onPress={handleSendOtp} />
-        </>
-      ) : (
-        <>
-          <Text>Enter OTP:</Text>
-          <TextInput
-            value={otp}
-            onChangeText={setOtp}
-            keyboardType="number-pad"
-            placeholder="Enter OTP"
-          />
-          <Button title="Verify OTP" onPress={handleVerifyOtp} />
-        </>
-      )}
+    <View style={styles.container}>
+      <Text style={styles.label}>Enter Phone Number:</Text>
+      <TextInput
+        style={styles.input}
+        value={phoneNumber}
+        onChangeText={setPhoneNumber}
+        keyboardType="phone-pad"
+        placeholder="Enter your phone number"
+      />
+      <Button title="Verify Phone Number" onPress={handleSendOtp} />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff",
+  },
+  label: {
+    fontSize: 18,
+    marginBottom: 10,
+  },
+  input: {
+    width: "80%",
+    height: 40,
+    borderColor: "gray",
+    borderWidth: 1,
+    marginBottom: 20,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+  },
+});
 
 export default LoginScreen;
